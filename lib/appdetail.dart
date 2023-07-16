@@ -28,9 +28,43 @@ class _AppDetailState extends State<AppDetail> {
 
   //
   void _deleteIndex(int index) {
-    setState(() {
-      ls.removeAt(index);
-    });
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Are you want to delete?'),
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        ls.removeAt(index);
+                        Navigator.of(context).pop();
+                      });
+                    },
+                    child: Text(
+                      'Yes',
+                    ),
+                  ),
+                ),
+                //
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('No'),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   //
