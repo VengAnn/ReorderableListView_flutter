@@ -27,10 +27,62 @@ class _AppDetailState extends State<AppDetail> {
   }
 
   //
+  void _deleteIndex(int index) {
+    setState(() {
+      ls.removeAt(index);
+    });
+  }
+
+  //
+  void _EditIndex(int index) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: TextFormField(
+              initialValue: ls[index],
+              onFieldSubmitted: (value) {
+                setState(() {
+                  ls[index] = value;
+                  Navigator.of(context).pop();
+                });
+              },
+            ),
+          );
+        });
+  }
+
+  //
   Widget _itemBuilder(BuildContext context, int index) {
-    return ListTile(
+    return Card(
       key: ValueKey(index),
-      title: Text(ls[index]),
+      //
+      elevation: 10,
+      //
+      shadowColor: Colors.black,
+      //
+      color: index.isEven ? Colors.blue : Colors.red,
+      child: ListTile(
+        leading: Icon(
+          Icons.message,
+        ),
+        title: Text(ls[index]),
+        //
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              onPressed: () => _EditIndex(index),
+              icon: Icon(Icons.edit),
+            ),
+            //
+            IconButton(
+              onPressed: () => _deleteIndex(index),
+              icon: Icon(Icons.delete),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
